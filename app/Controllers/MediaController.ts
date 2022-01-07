@@ -5,7 +5,7 @@ export default class MediaController {
   public async get({ request }: HttpContextContract) {
     let filters = request.all()
 
-    let sort: string
+    let sort: [string, string] = ['popularity', 'desc']
     let search: string = filters.search || ''
     let status: boolean
     let genres: [string] = filters.genres || []
@@ -21,16 +21,13 @@ export default class MediaController {
 
     switch (filters.sort) {
       case 'По популярности':
-        sort = 'popularity'
+        sort = ['popularity', 'desc']
         break
       case 'По алфавиту':
-        sort = 'title'
+        sort = ['title', 'asc']
         break
       case 'По кол-ву серий':
-        sort = 'episodes'
-        break
-      default:
-        sort = 'popularity'
+        sort = ['episodes', 'desc']
         break
     }
 
@@ -51,7 +48,7 @@ export default class MediaController {
       .if(status!, builder => {
         builder.where('status', status)
       })
-      .orderBy(sort, 'desc')
+      .orderBy(sort[0], sort[1])
       .select('title', 'slug', 'poster')
 
     return anime

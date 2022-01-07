@@ -156,8 +156,7 @@
     cursor: pointer;
   }
 
-  &:hover, &_active {
-    color: rgb(var(--secondary-color));
+  &_active {
     background: rgb(40, 40, 40);
   }
 
@@ -172,6 +171,16 @@
     color: rgb(var(--primary-text));
     font-size: 1.4rem;
     margin: auto 0;
+  }
+
+  &.option_active > * {
+    color: rgb(var(--secondary-color));
+  }
+}
+
+@media(min-width: 501px) {
+  .option:hover {
+    background: rgb(40, 40, 40);
   }
 }
 

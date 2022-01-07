@@ -23,7 +23,7 @@
             :key="genre.name"
             @click="changeFilter(genre.name, 'genre')"
           >
-            <div class="option__image" :style="{'background-image': `url(${genre.image})`}" />
+            <fa class="option__image" :icon="genre.image" />
             <div class="option__name">{{ genre.name }}</div>
           </div>
         </div>

@@ -102,6 +102,7 @@ export default {
 @media(max-width: 500px) {
   .results {
     margin-top: 72px;
+    margin-bottom: 50px;
   }
 }
 

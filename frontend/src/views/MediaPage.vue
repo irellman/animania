@@ -39,7 +39,7 @@
           </div>
           <div class="data__block" v-if="width.value > 748">
             <div class="preview">
-              <div class="episode" v-if="media.videos">
+              <div class="episode" v-if="media.videos.length">
                 <div class="episode__poster" :style="{'background-image': `url(${media?.videos[0].preview})`, 'height': '180px'}">
                   <div class="episode__duration">{{ media?.videos[0].duration }} мин.</div>
                 </div>

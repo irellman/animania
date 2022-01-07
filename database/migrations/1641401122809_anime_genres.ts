@@ -9,8 +9,6 @@ export default class AnimeGenres extends BaseSchema {
       table.integer('anime_id').unsigned().references('anime.id')
       table.integer('genre_id').unsigned().references('genres.id')
       table.unique(['anime_id', 'genre_id'])
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
     })
   }
 

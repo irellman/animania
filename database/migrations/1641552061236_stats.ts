@@ -12,8 +12,6 @@ export default class Stats extends BaseSchema {
       table.integer('score_3')
       table.integer('score_2')
       table.integer('score_1')
-      table.timestamp('created_at', { useTz: true })
-      table.timestamp('updated_at', { useTz: true })
     })
   }
 
