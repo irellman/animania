@@ -1,18 +1,27 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Genre extends BaseModel {
+export default class Stat extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public name: string
+  public anime_id: number
 
   @column()
-  public slug: string
+  public score_5: number
 
   @column()
-  public image: string
+  public score_4: number
+
+  @column()
+  public score_3: number
+
+  @column()
+  public score_2: number
+
+  @column()
+  public score_1: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

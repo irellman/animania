@@ -155,7 +155,7 @@ export default {
     overflow: hidden;
 
     &-fill {
-      background-color: var(--media-color-hover);
+      background-color: rgb(var(--secondary-color-hover));
       z-index: 2;
       height: 100%;
     }

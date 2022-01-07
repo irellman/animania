@@ -5,12 +5,12 @@
       <div class="poster" :style="{'background-image': `url(${poster})`}" />
     </div>
     <div class="poster" :style="{'background-image': `url(${poster})`}" v-else />
-    <div class="content" :style="styles">
+    <div class="content">
       <div class="content__wrapper">
         <div class="data">
           <div class="data__block">
             <div class="header">
-              <div class="title">{{ media.title }}</div>
+              <div class="title">{{ media?.title }}</div>
             </div>
             <div class="actions">
               <div class="rating">
@@ -22,8 +22,8 @@
                   <fa class="rating__star" :class="{'rating__star_hover': hover_stars >= 5}" :icon="[hover_stars >= 5 ? 'fas' : 'far', 'star']" @mouseover="hover_stars = 5" @mouseout="hover_stars = selected_star" @click="StarSelected(5)" />
                 </div>
                 <div class="rating__stats">
-                  Средняя оценка: <span class="rating__score" @click.stop="OpenDropdown">{{ media.score }}</span> ({{ this.popularity }})
-                  <MediaStatDropdown :stats="media.stat" :popularity="media.popularity" :isActive="StatDropdownActive" @close="StatDropdownActive = false" />
+                  Средняя оценка: <span class="rating__score" @click.stop="OpenDropdown">{{ media?.score }}</span> ({{ this.popularity }})
+                  <MediaStatDropdown :stats="media?.stats" :popularity="media?.popularity" :isActive="StatDropdownActive" @close="StatDropdownActive = false" />
                 </div>
               </div>
               <div class="actions__buttons">
@@ -32,16 +32,16 @@
                 <div class="actions__button actions__button_list-button" @click="AddToList()"><fa class="actions__icon_list-button" icon="plus" />Добавить в список</div>
               </div>
             </div>
-            <div class="description">{{ media.description }}</div>
+            <div class="description">{{ media?.description }}</div>
             <div class="genres">
-              <router-link :to="`/catalog/${genre.slug}`" class="genres__genre" v-for="genre in media.genres" :key="genre">{{ genre.name }}</router-link>
+              <router-link :to="`/catalog/${genre.slug}`" class="genres__genre" v-for="genre in media?.genres" :key="genre">{{ genre.name }}</router-link>
             </div>
           </div>
           <div class="data__block" v-if="width.value > 748">
             <div class="preview">
-              <div class="episode">
-                <div class="episode__poster" :style="{'background-image': `url(${media.videos[0].poster})`, 'height': '180px'}">
-                  <div class="episode__duration">{{ media.videos[0].duration }} мин.</div>
+              <div class="episode" v-if="media.videos">
+                <div class="episode__poster" :style="{'background-image': `url(${media?.videos[0].preview})`, 'height': '180px'}">
+                  <div class="episode__duration">{{ media?.videos[0].duration }} мин.</div>
                 </div>
               </div>
               <div class="preview__button">Начать смотреть</div>
@@ -51,8 +51,8 @@
         <div class="watch">
           <div class="arc"></div>
           <div class="episode-list">
-            <div class="episode" v-for="video of media.videos" :key="video.title">
-              <div class="episode__poster" :style="{'background-image': `url(${video.poster})`}">
+            <div class="episode" v-for="video of media?.videos" :key="video.title">
+              <div class="episode__poster" :style="{'background-image': `url(${video.preview})`}">
                 <div class="episode__duration">{{ video.duration }} мин.</div>
               </div>
               <div class="episode__title">#{{ video.number }} - {{ video.title }}</div>
@@ -65,9 +65,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 import MediaStatDropdown from '@/components/MediaPage/MediaStatDropdown'
+
+import { getOneMedia } from '@/api/media'
 
 export default {
   name: 'MediaPage',
@@ -80,13 +80,10 @@ export default {
 
   data() {
     return {
-      media: {},
+      media: undefined,
       arc_list: [],
-
       selected_star: 5,
       hover_stars: 5,
-      styles: {},
-
       StatDropdownActive: false
     }
   },
@@ -117,17 +114,15 @@ export default {
   },
 
   created() {
-    axios.post(`http://localhost:5000/media/${this.$route.params.slug}`).then(data => {
+    getOneMedia(this.$route.params.slug).then(data => {
       this.media = data.data
 
-      this.styles = this.hexToHSL(this.media.color)
-
-      for (let video of this.media.videos) {
+      for (let video of data.data) {
         if (this.arc_list.indexOf(video.season) === -1) {
           this.arc_list.push(video.season)
         }
       }
-    })    
+    })
   },
 
   methods: {
@@ -143,52 +138,6 @@ export default {
     StarSelected(star) {
       this.selected_star = star
       console.log(`star selected: ${star}`)
-    },
-    hexToHSL(H) {
-      let r = 0, g = 0, b = 0;
-      if (H.length == 4) {
-        r = "0x" + H[1] + H[1];
-        g = "0x" + H[2] + H[2];
-        b = "0x" + H[3] + H[3];
-      } else if (H.length == 7) {
-        r = "0x" + H[1] + H[2];
-        g = "0x" + H[3] + H[4];
-        b = "0x" + H[5] + H[6];
-      }
-
-      r /= 255;
-      g /= 255;
-      b /= 255;
-      let cmin = Math.min(r,g,b),
-          cmax = Math.max(r,g,b),
-          delta = cmax - cmin,
-          h = 0,
-          s = 0,
-          l = 0;
-
-      if (delta == 0)
-        h = 0;
-      else if (cmax == r)
-        h = ((g - b) / delta) % 6;
-      else if (cmax == g)
-        h = (b - r) / delta + 2;
-      else
-        h = (r - g) / delta + 4;
-
-      h = Math.round(h * 60);
-
-      if (h < 0)
-        h += 360;
-
-      l = (cmax + cmin) / 2;
-      s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
-      s = +(s * 100).toFixed(0);
-      l = +(l * 100).toFixed(0);
-
-      return {
-        '--media-color': `hsl(${h}, ${s}%, ${l}%)`,
-        '--media-color-hover': `hsl(${h}, ${s+10}%, ${l+10}%)`
-      }
     }
   }
 }

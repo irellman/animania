@@ -56,4 +56,18 @@ export default class MediaController {
 
     return anime
   }
+
+  public async getOne({ params }: HttpContextContract) {
+    return await Anime.query()
+    .preload('genres', genres => {
+      genres.select('name', 'slug')
+    })
+    .preload('videos', videos => {
+      videos.select('title', 'preview', 'season', 'number', 'duration')
+    })
+    .preload('stats', stats => {
+      stats.select('score_5', 'score_4', 'score_3', 'score_2', 'score_1')
+    })
+    .where('slug', params.slug).first()
+  }
 }
