@@ -1,2 +1,2 @@
 # irellman.github.io
-s
+node ace serve
