@@ -24,22 +24,6 @@
       <router-link to="/planning" class="header__button"><fa icon="bookmark" size="sm" /><div class="header__text">Закладки</div></router-link>
       <router-link to="/profile" class="header__button"><fa icon="user" size="sm" /><div class="header__text">Аккаунт</div></router-link>
     </div>
-    <div class="modal" :class="{'modal_active': modal_is_active}">
-      <div class="modal__content">
-        <div class="modal-user">
-          <div class="modal-user__avatar" :style="{'background-image': 'url(https://s4.anilist.co/file/anilistcdn/user/avatar/large/b872722-jCvwfQqyVOor.png)'}" />
-          <div class="modal-user__username">Rahlmann</div>
-        </div>
-        <div class="modal-list">
-          <div class="modal-list__option"><fa class="modal-list__icon" icon="user" />Мой аккаунт</div>
-          <div class="modal-list__option"><fa class="modal-list__icon" icon="bookmark" />Смотреть позже</div>
-          <div class="modal-list__option"><fa class="modal-list__icon" icon="list" />Мои списки</div>
-        </div>
-        <div class="modal-list">
-          <div class="modal-list__option"><fa class="modal-list__icon" icon="sign-out-alt" />Выйти</div>
-        </div>
-      </div>
-    </div>
   </header>
 </template>
 
@@ -51,26 +35,9 @@ export default {
 
   props: ['user'],
 
-  data() {
-    return {
-      modal_is_active: false
-    }
-  },
-
   methods: {
     logout() {
       this.$emit('logout')
-    },
-    CloseModal(event) {
-      if (!event.target.closest('.modal__content')) {
-        document.body.classList.remove('scroll-off')
-        this.modal_is_active = false
-      }
-    },
-    OpenModal() {
-      this.modal_is_active = true
-      document.body.classList.add('scroll-off')
-      document.addEventListener('click', this.CloseModal)
     }
   }
 }

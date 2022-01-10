@@ -80,80 +80,12 @@
 
   &:hover {
     cursor: pointer;
-    border-radius: 50%;
-  }
-
-  &_active {
-    border-radius: 50%
   }
 
   &__avatar {
     width: 50px;
     height: 50px;
     border-radius: 2px;
-  }
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0,0,0,.5);
-  top: 60px;
-
-  &.modal_active {
-    display: block;
-  }
-
-  &__content {
-    position: absolute;
-    width: 400px;
-    right: 440px;
-    border-radius: 0 0 2px 2px;
-    background-color: rgb(var(--primary-color-hover));
-  }
-}
-
-.modal-user {
-  display: flex;
-  margin: 0 10px;
-  padding: 10px 0;
-
-  &__avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-size: cover;
-  }
-
-  &__username {
-    margin: auto 10px;
-    font-size: 25px;
-  }
-}
-
-.modal-list {
-  margin: 0 10px;
-  padding: 10px 0;
-  border-top: 2px solid rgb(var(--secondary-color));
-
-  &__option {
-    display: grid;
-    grid-template-columns: 40px 1fr;
-    padding: 15px 0;
-    margin: 10px 0;
-    border-radius: 2px;
-    transition: background-color .25s;
-
-    &:hover {
-      cursor: pointer;
-      background-color: rgb(var(--primary-color));
-    }
-  }
-
-  &__icon {
-    margin: auto;
   }
 }
 
