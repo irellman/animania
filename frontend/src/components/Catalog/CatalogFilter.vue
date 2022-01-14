@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="options__footer">
-        <div class="options__button" v-if="width.value <= 500" @click="listActive = false">Обновить Фильтры</div>
+        <div class="options__button" v-if="width.value <= 768" @click="listActive = false">Обновить Фильтры</div>
       </div>
     </div>
   </div>

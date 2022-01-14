@@ -9,7 +9,8 @@
 .options-btn {
   position: relative;
   align-items: center;
-  background: rgb(var(--primary-color-hover));
+  background: #000;
+  box-shadow: 0 0 0 1px #202020;
   border-radius: 2px;
   color: rgb(var(--primary-text));
   cursor: pointer;
@@ -17,9 +18,14 @@
   font-size: 1.8rem;
   height: 42px;
   justify-content: center;
+  transition: all .25s;
+
+  &:hover {
+    box-shadow: 0 0 0 1px rgb(var(--secondary-color));
+  }
 
   & > svg {
-    transition: color .25s;
+    transition: color .15s;
   }
 
   & > svg.active {
@@ -32,7 +38,8 @@
 }
 
 .search {
-  background: rgb(var(--primary-color-hover));;
+  background: #000;
+  box-shadow: 0 0 0 1px #202020;
   color: rgb(var(--primary-text));
   border-radius: 2px;
   display: grid;
@@ -41,15 +48,19 @@
   align-items: center;
   grid-gap: 12px;
   height: 42px;
-  grid-template-columns: 13px auto;
+  grid-template-columns: 40px auto;
   letter-spacing: 0.03rem;
-  padding: 11px 16px;
-  padding-left: 13px;
+  transition: all .25s;
+
+  &:hover {
+    box-shadow: 0 0 0 1px rgb(var(--secondary-color));
+  }
 
   &__icon {
     color: rgb(var(--primary-text));
     font-size: 1.3rem;
     height: 1.6rem;
+    width: 100%;
   }
 
   &__input {
@@ -61,6 +72,7 @@
     outline: 0;
     padding: 0;
     width: 100%;
+    height: 100%;
   }
 }
 
@@ -91,7 +103,7 @@
 }
 
 .options {
-  background: rgb(var(--primary-color-hover));
+  background: #000;
   right: 0;
   position: absolute;
   top: 50px;
@@ -102,6 +114,13 @@
   transform: scale(0, 0);
   transform-origin: 100% 0;
   transition: 0.2s;
+
+  @media(min-width: 769px) {
+    & {
+      box-shadow: 0 0 0 1px #202020;
+      border-radius: 2px;
+    }
+  }
 
   &.options_visible {
     opacity: 1;
@@ -157,7 +176,7 @@
   }
 
   &_active {
-    background: rgb(40, 40, 40);
+    background: #101010;
   }
 
   &__image {
@@ -178,21 +197,21 @@
   }
 }
 
-@media(min-width: 501px) {
+@media(min-width: 768px) {
   .option:hover {
-    background: rgb(40, 40, 40);
+    background: #101010;
   }
 }
 
-@media(max-width: 500px) {
+@media(max-width: 768px) {
   .options {
     width: 100%;
-    height: calc(100vh - 50px);
+    height: 100vh;
     top: 0;
     
     &__filters {
       overflow-y: scroll;
-      height: calc(100vh - 110px);
+      height: calc(100vh - 60px);
       width: 100%;
     }
 
@@ -200,8 +219,9 @@
       position: fixed;
       bottom: 0;
       padding: 10px;
-      background-color: #141414;
+      background-color: #000;
       width: 100%;
+      height: 60px;
     }
 
     &__button {
@@ -209,6 +229,10 @@
       padding: 10px;
       text-align: center;
       border-radius: 2px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -220,6 +244,6 @@
     top: 0;
     left: 0;
     z-index: 200;
-    background: rgb(var(--primary-color));
+    background-color: #000;
   }
 }

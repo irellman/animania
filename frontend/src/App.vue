@@ -78,6 +78,9 @@ export default {
 
 <style lang="scss">
 :root {
+  --gray-50: #303030;
+  --gray-100: #404040;
+
   --header-background: 30, 30, 30;
 
   --primary-color: 0, 0, 0;
@@ -103,7 +106,8 @@ html {
 body {
   background: rgb(var(--primary-color));
   color: rgb(var(--primary-text));
-  font-family: Roboto;
+  font-family: Rubik;
+  font-weight: 400;
   font-size: 16px;
   height: 100%;
   margin: 0;
@@ -121,22 +125,23 @@ a {
   outline: 0;
 }
 
-#app {
-  height: 100vh;
-}
-
 .page {
-  margin-top: 60px;
+  height: 100vh;
+  width: calc(100vw - 50px);
+  margin-left: 50px;
 
-  @media(max-width: 500px) {
-    margin: 0;
+  @media(max-width: 768px) {
+    & {
+      width: 100vw;
+      margin: 0;
+    }
   }
 }
 
 .container {
   margin: 0 auto;
   min-width: 320px;
-  width: 80vw;
+  width: calc(100vw - 50px);;
   padding: 10px 0;
 
   @media(min-width: 1540px) {
@@ -149,7 +154,6 @@ a {
 
   @media(min-width: 1024px) and (max-width: 1540px) {
     & {
-      width: 100vw;
       padding-left: 50px;
       padding-right: 50px;
     }
@@ -157,8 +161,13 @@ a {
 
   @media(max-width: 1024px) {
     & {
-      width: 100vw;
       padding: 10px;
+    }
+  }
+
+  @media(max-width: 768px) {
+    & {
+      width: 100vw;
     }
   }
 }
